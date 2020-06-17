@@ -1,6 +1,6 @@
 let board = [
-    ['X', '', ''],
-    ['', 'O', ''],
+    ['', '', ''],
+    ['', '', ''],
     ['', '', ''],
 ]
 
@@ -48,4 +48,62 @@ function draw() {
       }
     }
   }
+
+  let result = checkWinner();
+  if(result != null){
+    noLoop();
+    let resultText = createP('');
+    resultText.style('font-size', '32pt');
+    if(result == 'tie'){
+      resultText.html('Tie!');
+    }else{
+      resultText.html(`${result} wins!`);
+    }
+  }else{
+    changeTurn();
+  }
+}
+
+function win_line(l1, l2, l3){
+  return l1 == l2 && l2 == l3 && l3 != '';
+}
+
+function checkWinner(){
+  let winner = null;
+
+  // Horizontal
+  for(let i = 0; i < 3; i++){
+      if(win_line(board[i][0], board[i][1], board[i][2])){
+        winner = board[i][0];
+      }
+  }
+
+  // Vertical
+  for(let i = 0; i < 3; i++){
+    if(win_line(board[0][i], board[1][i], board[2][i])){
+      winner = board[0][i];
+    }
+  }
+
+  // Diagonal
+  if (win_line(board[0][0], board[1][1], board[2][2])) {
+    winner = board[0][0];
+  }else if (win_line(board[2][0], board[1][1], board[0][2])) {
+    winner = board[2][0];
+  }
+
+  if (winner == null && available.length == 0) {
+    return 'tie';
+  } else {
+    return winner;
+  }
+}
+
+function changeTurn(){
+  let index = floor(random(available.length));
+  let spot = available.splice(index, 1)[0];
+  let i = spot[0];
+  let j = spot[1];
+  board[i][j] = players[current_player];
+  current_player = (current_player + 1) % players.length;
 }
