@@ -1,3 +1,7 @@
+var canvas;
+var resultText;
+var resetButton;
+
 let board = [
     ['', '', ''],
     ['', '', ''],
@@ -9,7 +13,20 @@ let current_player;
 let available = [];
 
 function setup() { 
-  createCanvas(400, 400);
+  canvas = createCanvas(400, 400);
+  resultText = createP('');
+  resetButton = createButton('RESET', 5);
+
+  let xMidScreen = windowWidth / 2;
+  let yMidScreen = windowHeight / 2;
+
+  canvas.position(xMidScreen - width / 2, yMidScreen - height / 2);
+  resultText.position(xMidScreen - 30, yMidScreen - height / 2 - 75);
+  resetButton.position(xMidScreen - 50, yMidScreen + height / 2 + 20);
+
+  resetButton.size(100, 40);
+  resetButton.mouseReleased(reset);
+  
   frameRate(30);
   current_player = floor(random(players.length));
   for(let i = 0; i < 3; i++){
@@ -19,8 +36,28 @@ function setup() {
   }
 }
 
+function reset(){
+  board = [
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', ''],
+  ];
+
+  available = [];
+  for(let i = 0; i < 3; i++){
+    for(let j = 0; j < 3; j++){
+        available.push([j, i]);
+    }
+  }
+
+  current_player = floor(random(players.length));
+  resultText.html('');
+  loop();
+}
+
 function draw() { 
-  background(255);
+  clear();
+  //background(255);
   let w = width / 3;
   let h = height / 3;
   strokeWeight(4);
@@ -52,15 +89,12 @@ function draw() {
   let result = checkWinner();
   if(result != null){
     noLoop();
-    let resultText = createP('');
-    resultText.style('font-size', '32pt');
+    resultText.style('font-size', '20pt');
     if(result == 'tie'){
       resultText.html('Tie!');
     }else{
       resultText.html(`${result} wins!`);
     }
-  }else{
-    changeTurn();
   }
 }
 
@@ -99,11 +133,22 @@ function checkWinner(){
   }
 }
 
-function changeTurn(){
-  let index = floor(random(available.length));
-  let spot = available.splice(index, 1)[0];
-  let i = spot[0];
-  let j = spot[1];
-  board[i][j] = players[current_player];
+function mousePressed(){
+  let x = floor(mouseX / (width / 3));
+  let y = floor(mouseY / (height / 3));
+  
+  // Check valid spot
+  if(x < 0 || x > 2 || y < 0 || y > 2) return;
+  // Check if has not been played
+  if(board[x][y] != '') return;
+
+  // Remove spot from available slots for in case of tie
+  let index = 0;
+  for(let slot of available){
+    if(slot[0] == x && slot[1] == y) available.splice(index, 1);
+    index++;
+  }
+
+  board[x][y] = players[current_player];
   current_player = (current_player + 1) % players.length;
 }
