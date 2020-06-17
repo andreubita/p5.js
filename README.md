@@ -2,7 +2,7 @@
 
 Here I'm going to post some coding challenges I make in javascript using p5.js
 
-You can test the different mini projects (online)[https://andreubita.github.io/p5.js/]
+You can test the different mini projects [online](https://andreubita.github.io/p5.js/)
 
 ## Challenges ✔
 
