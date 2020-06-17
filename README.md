@@ -6,6 +6,6 @@ You can test the different mini projects [online](https://andreubita.github.io/p
 
 ## Challenges ✔
 
-- [Clock](tree/master/clock)
-- [Tic-Tac-Toe](tree/master/tic-tac-toe)
-- [Chrome Dinosaur](tree/master/chrome-dino)
+- [Clock](https://github.com/andreubita/p5.js/tree/master/clock)
+- [Tic-Tac-Toe](https://github.com/andreubita/p5.js/tree/master/tic-tac-toe)
+- [Chrome Dinosaur](https://github.com/andreubita/p5.js/tree/master/chrome-dino)
