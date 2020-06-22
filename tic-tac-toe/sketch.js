@@ -105,10 +105,13 @@ function openSlots(){
 
 function mousePressed() {
     if (currentPlayer == human) {
-        let i = floor(mouseX / w);
-        let j = floor(mouseY / h);
-        if (board[i][j] == '') {
-            board[i][j] = human;
+        let x = floor(mouseX / w);
+        let y = floor(mouseY / h);
+  
+        // Check valid spot
+        if(x < 0 || x > 2 || y < 0 || y > 2) return;
+        if (board[x][y] == '') {
+            board[x][y] = human;
             currentPlayer = ai;
             if(openSlots() == 0) return;
             playAI();

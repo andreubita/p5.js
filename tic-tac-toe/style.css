@@ -14,3 +14,7 @@ body {
     background-color: white;
     position: relative;
 }
+
+button {
+    margin-bottom: 30px;
+}
