@@ -16,7 +16,7 @@ function setup(){
     let halfWindowWidth = windowWidth / 2;
     let halfWindowHeight = windowHeight / 2;
     
-    canvas = createCanvas(900, 500);
+    canvas = createCanvas(1000, 500);
     canvas.position(halfWindowWidth - width / 2,  halfWindowHeight - height / 2);
 
     grape = new Grape();
